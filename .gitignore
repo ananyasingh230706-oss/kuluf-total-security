@@ -1,0 +1,93 @@
+
+# ============================================================
+# KULUF TOTAL SECURITY — GIT IGNORE
+# ============================================================
+
+
+# ─── Environment Variables & Secrets ────────────────────────
+.env
+.env.*
+!.env.example
+
+# Secret keys and certificates
+*.key
+*.pem
+*.secret
+secrets/
+
+# ─── Dependencies ────────────────────────────────────────────
+node_modules/
+**/node_modules/
+
+
+# ─── Build Output ────────────────────────────────────────────
+dist/
+build/
+**/dist/
+**/build/
+
+# ─── Database Files ──────────────────────────────────────────
+# Never commit local databases or customer data
+server/data/*.sqlite
+server/data/*.sqlite3
+server/data/*.db
+server/data/*.sqlite-wal
+server/data/*.sqlite-shm
+
+# Keep the data directory in Git if needed
+!server/data/.gitkeep
+
+
+# ─── Uploaded Images & User Files ────────────────────────────
+# User-uploaded files should be stored separately in production
+server/uploads/*
+!server/uploads/.gitkeep
+
+# Keep public SVG assets only if they are safe to publish
+!server/uploads/*.svg
+
+
+# ─── Logs ────────────────────────────────────────────────────
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+logs/
+
+
+# ─── Operating System Files ──────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+
+# ─── Editors & IDEs ──────────────────────────────────────────
+.vscode/settings.json
+.vscode/*.code-workspace
+.idea/
+*.swp
+*.swo
+*~
+
+
+# ─── Testing & Coverage ──────────────────────────────────────
+coverage/
+.nyc_output/
+
+
+# ─── Archives & Packages ─────────────────────────────────────
+*.tgz
+*.zip
+
+
+# ─── Temporary Files ────────────────────────────────────────
+tmp/
+temp/
+*.tmp
+*.bak

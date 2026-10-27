@@ -1,0 +1,38 @@
+{
+  "name": "kuluf-total-security",
+  "private": true,
+  "version": "1.1.0",
+  "description": "KULUF Total Security — Smart security locks e-commerce platform",
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "node server/index.js",
+    "client": "vite",
+    "build": "vite build",
+    "start": "NODE_ENV=production node server/index.js",
+    "start:win": "set NODE_ENV=production && node server/index.js",
+    "preview": "vite preview",
+    "lint": "eslint src --ext .js,.jsx --max-warnings 0"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "better-sqlite3": "^12.4.1",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^17.4.2",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^2.0.2",
+    "nodemailer": "^10.1.7",
+    "razorpay": "^2.9.8"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^5.0.4",
+    "concurrently": "^9.2.1",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "vite": "^7.1.7"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
