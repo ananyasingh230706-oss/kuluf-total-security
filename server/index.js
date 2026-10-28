@@ -71,22 +71,48 @@ function saveEmailOtp(userId, otp) {
 
 
 async function sendEmailOtp(email, otp) {
-  await emailTransporter.sendMail({
-    from: `"KULUF Total Security" <${process.env.SMTP_USER}>`,
-    to: email,
-    subject: "Verify your KULUF account",
-    text: `Your KULUF verification code is ${otp}. It expires in 10 minutes. Do not share this code with anyone.`,
-    html: `
-      <div style="font-family:Arial,sans-serif;max-inline-size:520px;margin:auto;padding:24px">
-        <h2>KULUF Total Security</h2>
-        <p>Use this code to verify your email address:</p>
-        <div style="font-size:32px;font-weight:bold;letter-spacing:8px;padding:16px 0">${otp}</div>
-        <p>This code expires in 10 minutes. If you didn't request it, you can ignore this email.</p>
-      </div>
-    `,
-  });
-}
+  const apiKey = process.env.RESEND_API_KEY;
 
+  if (!apiKey) {
+    throw new Error("RESEND_API_KEY is missing from environment variables.");
+  }
+
+  const response = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      from: "KULUF Total Security <onboarding@resend.dev>",
+      to: [email],
+      subject: "Your KULUF email verification code",
+      html: `
+        <div style="font-family:Arial,sans-serif;max-width:520px;margin:auto;padding:28px;color:#222;">
+          <h2 style="margin-bottom:8px;">KULUF Total Security</h2>
+          <p>Use the verification code below to verify your email address.</p>
+          <div style="font-size:32px;font-weight:bold;letter-spacing:8px;padding:20px 0;">
+            ${otp}
+          </div>
+          <p>This code expires in 10 minutes.</p>
+          <p>If you didn't create a KULUF account, you can ignore this email.</p>
+        </div>
+      `,
+    }),
+  });
+
+  const result = await response.json().catch(() => ({}));
+
+  if (!response.ok) {
+    throw new Error(
+      result.message ||
+      result.error ||
+      `Resend email request failed with status ${response.status}`
+    );
+  }
+
+  return result;
+}
 /* =========================================================
    ENVIRONMENT VALIDATION
    ========================================================= */
