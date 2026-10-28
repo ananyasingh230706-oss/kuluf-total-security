@@ -17,6 +17,7 @@ import "./styles.css";
 /* =========================================================
    API
    ========================================================= */
+const API_BASE_URL = "https://kuluf-total-security.onrender.com";
 
 const api = async (
   url,
@@ -44,12 +45,14 @@ const api = async (
   }
 
   const response = await fetch(
-    url,
-    {
-      ...options,
-      headers,
-    }
-  );
+  url.startsWith("http")
+    ? url
+    : `${API_BASE_URL}${url}`,
+  {
+    ...options,
+    headers,
+  }
+);
 
   const data =
     await response
