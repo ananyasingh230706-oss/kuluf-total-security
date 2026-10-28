@@ -1627,16 +1627,7 @@ app.use((error, req, res, next) => {
    PRODUCTION STATIC FILES
    ========================================================= */
 
-if (process.env.NODE_ENV === "production") {
-  const distDir = path.join(__dirname, "..", "dist");
-  if (fs.existsSync(distDir)) {
-    app.use(express.static(distDir));
-    app.get("*", (req, res) => {
-      if (req.path.startsWith("/api") || req.path.startsWith("/uploads")) return;
-      res.sendFile(path.join(distDir, "index.html"));
-    });
-  }
-}
+
 
 /* =========================================================
    START SERVER + GRACEFUL SHUTDOWN
